@@ -1,9 +1,9 @@
 import app from "./app";
+import { envVars } from "./config/config";
 const bootstrap = () => {
-  const port = process.env.PORT || 5000;
   try {
-    app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
+    app.listen(envVars.PORT, () => {
+      console.log(`Server is running on http://localhost:${envVars.PORT}`);
     });
   } catch (error) {
     console.log(`Error Express Server ${error}`);
