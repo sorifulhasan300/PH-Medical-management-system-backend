@@ -6,10 +6,8 @@ const catchAsync = (fn: RequestHandler) => {
     try {
       await fn(req, res, next);
     } catch (error: any) {
-      res.status(500).json({
-        error: "Failed to process request",
-        message: error.message || "An error occurred",
-      });
+      next(error);
+      console.log(error);
     }
   };
 };

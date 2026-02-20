@@ -4,6 +4,10 @@ enum UserRole {
   DOCTOR
   PATIENT
 }
+enum Gender{
+  MALE
+  FEMALE
+}
 enum UserStatus {
  BLOCKED
  DELETED

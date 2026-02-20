@@ -55,8 +55,10 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  Doctor: 'Doctor',
   Patient: 'Patient',
-  Specialty: 'Specialty'
+  Specialty: 'Specialty',
+  DoctorSpecialty: 'DoctorSpecialty'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -138,6 +140,31 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const DoctorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  profilePhoto: 'profilePhoto',
+  contactNumber: 'contactNumber',
+  registrationNumber: 'registrationNumber',
+  experience: 'experience',
+  gender: 'gender',
+  address: 'address',
+  appointmentFee: 'appointmentFee',
+  qualification: 'qualification',
+  currentWorkplace: 'currentWorkplace',
+  designation: 'designation',
+  averageRating: 'averageRating',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
+
+
 export const PatientScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -158,7 +185,6 @@ export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeo
 export const SpecialtyScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  description: 'description',
   icon: 'icon',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
@@ -167,6 +193,15 @@ export const SpecialtyScalarFieldEnum = {
 } as const
 
 export type SpecialtyScalarFieldEnum = (typeof SpecialtyScalarFieldEnum)[keyof typeof SpecialtyScalarFieldEnum]
+
+
+export const DoctorSpecialtyScalarFieldEnum = {
+  id: 'id',
+  doctorId: 'doctorId',
+  specialtyId: 'specialtyId'
+} as const
+
+export type DoctorSpecialtyScalarFieldEnum = (typeof DoctorSpecialtyScalarFieldEnum)[keyof typeof DoctorSpecialtyScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { UserStatus } from "../../../generated/prisma/enums";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
@@ -27,14 +28,21 @@ const registerPatient = async (payload: RegisterPatientPayload) => {
   }
 
   const patient = await prisma.$transaction(async (tx) => {
-    const createPatient = await tx.patient.create({
-      data: {
-        userId: data.user.id,
-        name: payload.name,
-        email: payload.email,
-      },
-    });
-    return createPatient;
+    try {
+      const createPatient = await tx.patient.create({
+        data: {
+          userId: data.user.id,
+          name: payload.name,
+          email: payload.email,
+        },
+      });
+      return createPatient;
+    } catch (error) {
+      await prisma.user.delete({
+        where: { id: data.user.id },
+      });
+      throw error;
+    }
   });
 
   return {
