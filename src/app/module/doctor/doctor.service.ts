@@ -1,3 +1,5 @@
+import { StatusCodes } from "http-status-codes";
+import AppError from "../../../error-helper/app.error.helper";
 import { Doctor } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
@@ -18,7 +20,7 @@ const doctorById = async ({ id }: { id: string }) => {
     },
   });
   if (!doctorExist) {
-    throw new Error("Doctor not found");
+    throw new AppError(StatusCodes.NOT_FOUND, "Doctor not found");
   }
   const doctor = await prisma.doctor.findUnique({
     where: {
@@ -63,7 +65,7 @@ const softDeleteDoctor = async ({ id }: { id: string }) => {
     },
   });
   if (!doctorExist) {
-    throw new Error("Doctor not found");
+    throw new AppError(StatusCodes.NOT_FOUND, "Doctor not found");
   }
   const doctor = await prisma.doctor.update({
     where: {

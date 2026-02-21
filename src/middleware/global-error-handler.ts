@@ -4,7 +4,8 @@ import { StatusCodes } from "http-status-codes";
 import z from "zod";
 import { IErrorSource, TErrorResponse } from "../interface/error.interface";
 import { envVars } from "../config/config";
-import { handleZodError } from "../helpers/error.helper";
+import { handleZodError } from "../error-helper/error.helper";
+import AppError from "../error-helper/app.error.helper";
 
 export const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +29,10 @@ export const globalErrorHandler = (
     stack = err.stack;
     const simplifyError = handleZodError(err);
     errorSource.push(...simplifyError);
+  } else if (err instanceof AppError) {
+    statusCode = err.statusCode;
+    message = err.message;
+    stack = err.stack;
   } else if (err instanceof Error) {
     statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
     message = err.message;

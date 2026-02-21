@@ -11,11 +11,3 @@ export const handleZodError = (error: z.ZodError) => {
   });
   return errorSource;
 };
-// statusCode = StatusCodes.BAD_REQUEST;
-// message = "Validation Error";
-// err.issues.forEach((issue) => {
-//   errorSource.push({
-//     path: issue.path.join(" "),
-//     message: issue.message,
-//   });
-// });

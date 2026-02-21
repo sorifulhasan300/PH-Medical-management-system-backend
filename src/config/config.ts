@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
+import AppError from "../error-helper/app.error.helper";
+import { StatusCodes } from "http-status-codes";
 dotenv.config();
 
 interface EnvConfig {
@@ -7,8 +9,13 @@ interface EnvConfig {
   DATABASE_URL: string;
   BETTER_AUTH_SECRET: string;
   BETTER_AUTH_URL: string;
+  ACCESS_TOKEN_SECRET: string;
+  REFRESH_TOKEN_SECRET: string;
+  ACCESS_TOKEN_EXPIRES_IN: string;
+  REFRESH_TOKEN_EXPIRES_IN: string;
+  BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: string;
+  BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: string;
 }
-
 const loadEnvVariables = (): EnvConfig => {
   const requiredEnvVars = [
     "NODE_ENV",
@@ -16,11 +23,18 @@ const loadEnvVariables = (): EnvConfig => {
     "DATABASE_URL",
     "BETTER_AUTH_SECRET",
     "BETTER_AUTH_URL",
+    "ACCESS_TOKEN_SECRET",
+    "REFRESH_TOKEN_SECRET",
+    "ACCESS_TOKEN_EXPIRES_IN",
+    "REFRESH_TOKEN_EXPIRES_IN",
+    "BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN",
+    "BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE",
   ];
 
   requiredEnvVars.forEach((varName) => {
     if (!process.env[varName]) {
-      throw new Error(
+      throw new AppError(
+        StatusCodes.BAD_REQUEST,
         `Environment variable ${varName} is required but not defined.`,
       );
     }
@@ -31,6 +45,14 @@ const loadEnvVariables = (): EnvConfig => {
     DATABASE_URL: process.env.DATABASE_URL as string,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET as string,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL as string,
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET as string,
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET as string,
+    ACCESS_TOKEN_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRES_IN as string,
+    REFRESH_TOKEN_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRES_IN as string,
+    BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: process.env
+      .BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN as string,
+    BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: process.env
+      .BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE as string,
   };
 };
 export const envVars = loadEnvVariables();
