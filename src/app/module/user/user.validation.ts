@@ -78,3 +78,27 @@ export const adminSchema = z.object({
     address: z.string().optional(),
   }),
 });
+
+export const SuperAdminSchema = z.object({
+  password: z
+    .string("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+
+  superAdmin: z.object({
+    name: z.string("Name is required"),
+    email: z.email("Email is required"),
+
+    profilePhoto: z.url("Invalid photo URL").optional(),
+
+    contactNumber: z.string("Contact number is required"),
+
+    gender: z
+      .enum(
+        ["MALE", "FEMALE"],
+        "Gender is required and must be one of 'MALE', 'FEMALE'",
+      )
+      .optional(),
+
+    address: z.string().optional(),
+  }),
+});

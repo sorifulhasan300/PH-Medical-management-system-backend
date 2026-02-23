@@ -36,3 +36,14 @@ export interface AdminPayload {
     address?: string | undefined;
   };
 }
+export interface SuperAdminPayload {
+  password: string;
+  superAdmin: {
+    name: string;
+    email: string;
+    profilePhoto?: string | undefined;
+    contactNumber: string;
+    gender: Gender;
+    address?: string | undefined;
+  };
+}

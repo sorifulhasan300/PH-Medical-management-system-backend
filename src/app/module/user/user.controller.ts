@@ -20,7 +20,16 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
     data: admin,
   });
 });
+const createSuperAdmin = catchAsync(async (req: Request, res: Response) => {
+  const superAdmin = await userService.createSuperAdmin(req.body);
+  sendResponse(res, {
+    success: true,
+    message: "Super Admin created successfully",
+    data: superAdmin,
+  });
+});
 export const userController = {
   createDoctor,
   createAdmin,
+  createSuperAdmin,
 };

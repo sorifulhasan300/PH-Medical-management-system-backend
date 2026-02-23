@@ -12,6 +12,7 @@ app.use(cookieParser());
 app.use("/api/v1", apiRouter);
 app.use(globalErrorHandler);
 app.use(NotFoundMiddleware);
+//this is testing
 // Test route to create a specialty and return it
 app.get("/", async (req: Request, res: Response) => {
   return res.json({ message: "Welcome to the Healthcare API" });

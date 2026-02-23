@@ -59,7 +59,8 @@ export const ModelName = {
   Doctor: 'Doctor',
   Patient: 'Patient',
   Specialty: 'Specialty',
-  DoctorSpecialty: 'DoctorSpecialty'
+  DoctorSpecialty: 'DoctorSpecialty',
+  SuperAdmin: 'SuperAdmin'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -221,6 +222,24 @@ export const DoctorSpecialtyScalarFieldEnum = {
 } as const
 
 export type DoctorSpecialtyScalarFieldEnum = (typeof DoctorSpecialtyScalarFieldEnum)[keyof typeof DoctorSpecialtyScalarFieldEnum]
+
+
+export const SuperAdminScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  profilePhoto: 'profilePhoto',
+  contactNumber: 'contactNumber',
+  gender: 'gender',
+  address: 'address',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type SuperAdminScalarFieldEnum = (typeof SuperAdminScalarFieldEnum)[keyof typeof SuperAdminScalarFieldEnum]
 
 
 export const SortOrder = {

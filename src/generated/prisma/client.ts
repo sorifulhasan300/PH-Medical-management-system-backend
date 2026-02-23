@@ -84,3 +84,8 @@ export type Specialty = Prisma.SpecialtyModel
  * 
  */
 export type DoctorSpecialty = Prisma.DoctorSpecialtyModel
+/**
+ * Model SuperAdmin
+ * 
+ */
+export type SuperAdmin = Prisma.SuperAdminModel

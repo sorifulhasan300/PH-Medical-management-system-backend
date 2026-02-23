@@ -3,7 +3,11 @@ import AppError from "../../../error-helper/app.error.helper";
 import { Gender, Specialty, UserRole } from "../../../generated/prisma/client";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
-import { AdminPayload, DoctorPayload } from "./user.interface";
+import {
+  AdminPayload,
+  DoctorPayload,
+  SuperAdminPayload,
+} from "./user.interface";
 
 const createDoctor = async (payload: DoctorPayload) => {
   const specialties: Specialty[] = [];
@@ -138,7 +142,7 @@ const createAdmin = async (payload: AdminPayload) => {
         },
       });
 
-      const doctor = await tx.doctor.findUnique({
+      const admin = await tx.admin.findUnique({
         where: { id: adminData.id },
         select: {
           id: true,
@@ -161,7 +165,77 @@ const createAdmin = async (payload: AdminPayload) => {
           },
         },
       });
-      return doctor;
+      return admin;
+    });
+
+    return result;
+  } catch (error) {
+    // Rollback user creation if doctor creation fails
+    await prisma.user.delete({
+      where: { id: userData.user.id },
+    });
+    throw error;
+  }
+};
+
+const createSuperAdmin = async (payload: SuperAdminPayload) => {
+  console.log(payload);
+  const userExists = await prisma.user.findUnique({
+    where: { email: payload.superAdmin.email },
+  });
+  if (userExists) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "super admin with this email already exists",
+    );
+  }
+
+  const userData = await auth.api.signUpEmail({
+    body: {
+      email: payload.superAdmin.email,
+      password: payload.password,
+      role: UserRole.SUPER_ADMIN,
+      name: payload.superAdmin.name,
+      needPasswordChange: true,
+    },
+  });
+  if (!userData.user) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Failed to create user admin");
+  }
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const adminData = await tx.superAdmin.create({
+        data: {
+          ...payload.superAdmin,
+          gender: payload.superAdmin.gender as Gender,
+          userId: userData.user.id,
+        },
+      });
+
+      const superAdmin = await tx.superAdmin.findUnique({
+        where: { id: adminData.id },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          profilePhoto: true,
+          contactNumber: true,
+          address: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              role: true,
+              emailVerified: true,
+              isDeleted: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
+      });
+      return superAdmin;
     });
 
     return result;
@@ -177,4 +251,5 @@ const createAdmin = async (payload: AdminPayload) => {
 export const userService = {
   createDoctor,
   createAdmin,
+  createSuperAdmin,
 };
