@@ -1,0 +1,12 @@
+model Prescription{
+   id String @id @default(uuid(7))
+
+   instruction String?
+   followupDate DateTime?
+   createdAt DateTime
+   updatedAt DateTime
+   appointmentId String @unique 
+   appoinment Appoitnment @relation(fields: [appointmentId], references: [id])
+  @@map("prescription_data")
+
+}
