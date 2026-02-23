@@ -93,12 +93,17 @@ export const CheckAuth =
           "Unauthorized access! Invalid access Token",
         );
       }
-      if (verifiedToken.data!.role !== "ADMIN") {
+      if (
+        authRoles.length > 0 &&
+        !authRoles.includes(verifiedToken.data!.role)
+      ) {
         throw new AppError(
           StatusCodes.FORBIDDEN,
-          "Unauthorized access! You have don't access this resource.",
+          "Unauthorized access! You don't have permission to access this resource.",
         );
       }
+
+      next();
     } catch (error: any) {
       next(error);
     }

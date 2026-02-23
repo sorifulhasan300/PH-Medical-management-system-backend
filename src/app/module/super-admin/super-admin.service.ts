@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../../error-helper/app.error.helper";
-import { Admin, SuperAdmin } from "../../../generated/prisma/client";
+import { SuperAdmin } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const getAllSuperAdmin = async () => {
