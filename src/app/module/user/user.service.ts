@@ -3,7 +3,7 @@ import AppError from "../../../error-helper/app.error.helper";
 import { Gender, Specialty, UserRole } from "../../../generated/prisma/client";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
-import { DoctorPayload } from "./user.interface";
+import { AdminPayload, DoctorPayload } from "./user.interface";
 
 const createDoctor = async (payload: DoctorPayload) => {
   const specialties: Specialty[] = [];
@@ -105,6 +105,76 @@ const createDoctor = async (payload: DoctorPayload) => {
   }
 };
 
+const createAdmin = async (payload: AdminPayload) => {
+  const userExists = await prisma.user.findUnique({
+    where: { email: payload.admin.email },
+  });
+  if (userExists) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      "admin with this email already exists",
+    );
+  }
+
+  const userData = await auth.api.signUpEmail({
+    body: {
+      email: payload.admin.email,
+      password: payload.password,
+      role: UserRole.ADMIN,
+      name: payload.admin.name,
+      needPasswordChange: true,
+    },
+  });
+  if (!userData.user) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Failed to create admin");
+  }
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const adminData = await tx.admin.create({
+        data: {
+          ...payload.admin,
+          gender: payload.admin.gender as Gender,
+          userId: userData.user.id,
+        },
+      });
+
+      const doctor = await tx.doctor.findUnique({
+        where: { id: adminData.id },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          profilePhoto: true,
+          contactNumber: true,
+          address: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              role: true,
+              emailVerified: true,
+              isDeleted: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
+      });
+      return doctor;
+    });
+
+    return result;
+  } catch (error) {
+    // Rollback user creation if doctor creation fails
+    await prisma.user.delete({
+      where: { id: userData.user.id },
+    });
+    throw error;
+  }
+};
+
 export const userService = {
   createDoctor,
+  createAdmin,
 };

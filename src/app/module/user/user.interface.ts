@@ -1,3 +1,5 @@
+import { Gender } from "../../../generated/prisma/enums";
+
 export interface DoctorPayload {
   password: string;
   doctor: {
@@ -21,4 +23,16 @@ export interface DoctorPayload {
     updatedAt?: Date;
   };
   specialties: string[];
+}
+
+export interface AdminPayload {
+  password: string;
+  admin: {
+    name: string;
+    email: string;
+    profilePhoto?: string | undefined;
+    contactNumber: string;
+    gender: Gender;
+    address?: string | undefined;
+  };
 }

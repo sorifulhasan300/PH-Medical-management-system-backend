@@ -5,6 +5,9 @@ import { prisma } from "../../lib/prisma";
 
 const allDoctors = async () => {
   const doctors = await prisma.doctor.findMany({
+    where: {
+      isDeleted: false,
+    },
     include: {
       specialties: true,
       user: true,

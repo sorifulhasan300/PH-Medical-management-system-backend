@@ -54,3 +54,27 @@ export const doctorSchema = z.object({
     .array(z.uuid("Specialty ID is required"))
     .min(1, "At least one specialty is required"),
 });
+
+export const adminSchema = z.object({
+  password: z
+    .string("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+
+  admin: z.object({
+    name: z.string("Name is required"),
+    email: z.email("Email is required"),
+
+    profilePhoto: z.url("Invalid photo URL").optional(),
+
+    contactNumber: z.string("Contact number is required"),
+
+    gender: z
+      .enum(
+        ["MALE", "FEMALE"],
+        "Gender is required and must be one of 'MALE', 'FEMALE'",
+      )
+      .optional(),
+
+    address: z.string().optional(),
+  }),
+});
