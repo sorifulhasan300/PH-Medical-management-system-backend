@@ -8,6 +8,7 @@ import {
   DoctorPayload,
   SuperAdminPayload,
 } from "./user.interface";
+import { RequestUser } from "../../../interface/requestUser.interface";
 
 const createDoctor = async (payload: DoctorPayload) => {
   const specialties: Specialty[] = [];
@@ -248,8 +249,43 @@ const createSuperAdmin = async (payload: SuperAdminPayload) => {
   }
 };
 
+const getMe = async (user: RequestUser) => {
+  const isUserExist = prisma.user.findUnique({
+    where: {
+      id: user.userId,
+    },
+    include: {
+      patient: {
+        include: {
+          appointments: {
+            include: {
+              prescription: true,
+            },
+          },
+          reviews: true,
+          medicalReports: true,
+          patientHealthData: true,
+        },
+      },
+      doctor: {
+        include: {
+          specialties: true,
+          appointments: true,
+          reviews: true,
+        },
+      },
+      admin: true,
+    },
+  });
+  if (!isUserExist) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+  return isUserExist;
+};
+
 export const userService = {
   createDoctor,
   createAdmin,
   createSuperAdmin,
+  getMe,
 };

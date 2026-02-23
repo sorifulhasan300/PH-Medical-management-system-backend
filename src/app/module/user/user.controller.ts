@@ -28,8 +28,18 @@ const createSuperAdmin = catchAsync(async (req: Request, res: Response) => {
     data: superAdmin,
   });
 });
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const superAdmin = await userService.getMe(user);
+  sendResponse(res, {
+    success: true,
+    message: "Get profile successfully",
+    data: superAdmin,
+  });
+});
 export const userController = {
   createDoctor,
   createAdmin,
   createSuperAdmin,
+  getMe,
 };

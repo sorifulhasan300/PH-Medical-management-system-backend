@@ -1,12 +1,15 @@
 model Prescription{
    id String @id @default(uuid(7))
-
    instruction String?
    followupDate DateTime?
    createdAt DateTime
    updatedAt DateTime
+   
+   // doctorId String @unique 
    appointmentId String @unique 
+   
    appoinment Appoitnment @relation(fields: [appointmentId], references: [id])
-  @@map("prescription_data")
+   // doctor Doctor @relation((fields: [doctorId],references: [id]))
+   @@map("prescription_data")
 
 }

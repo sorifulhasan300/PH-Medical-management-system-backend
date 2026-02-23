@@ -1,7 +1,6 @@
 model MedicalReport {
   id String @id @default(uuid(7))
   patientId     String   
-  doctorId      String   
   appointmentId String   @unique 
   diagnosis     String
   treatment     String
@@ -11,7 +10,6 @@ model MedicalReport {
 
   // Relations
   patient     Patient     @relation(fields: [patientId], references: [id])
-  doctor      Doctor      @relation(fields: [doctorId], references: [id])
   appointment Appoitnment @relation(fields: [appointmentId], references: [id])
 
   @@map("medical_reports")
