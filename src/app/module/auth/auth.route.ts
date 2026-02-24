@@ -18,5 +18,5 @@ route.post(
   ),
   authController.logoutUser,
 );
-
+route.post("/verify-email", authController.verifyEmail);
 export const AuthRoute = route;
