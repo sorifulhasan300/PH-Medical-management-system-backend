@@ -69,8 +69,29 @@ const getNewToken = catchAsync(async (req: Request, res: Response) => {
     },
   });
 });
+
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+  const betterSessionToken = req.cookies["better-auth.session_token"];
+
+  const result = await authService.changePassword(payload, betterSessionToken);
+
+  tokenUtils.setAccessTokenCookie(res, result.accessToken);
+  tokenUtils.setRefreshTokenCookie(res, result.refreshToken);
+  tokenUtils.setBetterAuthSessionCookie(res, result.token as string);
+
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "password change successfully",
+    data: {
+      result,
+    },
+  });
+});
 export const authController = {
   registerPatient,
   loginPatient,
   getNewToken,
+  changePassword,
 };

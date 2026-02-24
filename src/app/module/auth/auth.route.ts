@@ -5,4 +5,6 @@ const route = Router();
 route.post("/register", authController.registerPatient);
 route.post("/login", authController.loginPatient);
 route.post("/refresh-token", authController.getNewToken);
+route.post("/change-password", authController.changePassword);
+
 export const AuthRoute = route;

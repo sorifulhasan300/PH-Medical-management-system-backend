@@ -10,6 +10,7 @@ import { jwtUtils } from "../../utils/jwt.utils";
 import { envVars } from "../../../config/config";
 import { JwtPayload } from "jsonwebtoken";
 import { refreshToken } from "better-auth/api";
+import { ChangePassword } from "./auth.interface";
 
 interface RegisterPatientPayload {
   name: string;
@@ -173,8 +174,57 @@ const getNewToken = async (accessToken: string, sessionToken: string) => {
   };
 };
 
+const changePassword = async (
+  payload: ChangePassword,
+  betterSessionToken: string,
+) => {
+  const { currentPassword, newPassword } = payload;
+  const session = await auth.api.getSession({
+    headers: new Headers({
+      Authorization: `Bearer ${betterSessionToken}`,
+    }),
+  });
+  if (!session) {
+    throw new AppError(StatusCodes.UNAUTHORIZED, "Invalid session token");
+  }
+  const result = await auth.api.changePassword({
+    body: {
+      currentPassword,
+      newPassword,
+      revokeOtherSessions: true,
+    },
+    headers: new Headers({
+      Authorization: `Bearer ${betterSessionToken}`,
+    }),
+  });
+  const user = result.user;
+  const accessToken = tokenUtils.getAccessToken({
+    userId: user.id,
+    role: user.role,
+    name: user.name,
+    email: user.email,
+    status: user.status,
+    isDeleted: user.isDeleted,
+    emailVerified: user.emailVerified,
+  });
+  const refreshToken = tokenUtils.getRefreshToken({
+    userId: user.id,
+    role: user.role,
+    name: user.name,
+    email: user.email,
+    status: user.status,
+    isDeleted: user.isDeleted,
+    emailVerified: user.emailVerified,
+  });
+  return {
+    accessToken,
+    refreshToken,
+    ...result,
+  };
+};
 export const authService = {
   registerPatient,
   loginPatient,
   getNewToken,
+  changePassword,
 };
