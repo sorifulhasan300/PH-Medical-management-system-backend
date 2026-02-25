@@ -12,6 +12,10 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  trustedOrigins: [
+    envVars.BETTER_AUTH_URL || "http://localhost:5000",
+    envVars.FRONTEND_URL,
+  ],
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
@@ -116,6 +120,10 @@ export const auth = betterAuth({
       enabled: true,
       maxAge: 60 * 60 * 60 * 24,
     },
+  },
+
+  redirectURLs: {
+    signIn: `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success`,
   },
 
   // configuration for social login

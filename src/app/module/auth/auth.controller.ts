@@ -7,6 +7,9 @@ import AppError from "../../../error-helper/app.error.helper";
 import { StatusCodes } from "http-status-codes";
 import { CookieUtils } from "../../utils/cookie";
 import { prisma } from "../../lib/prisma";
+import { request } from "http";
+import { envVars } from "../../../config/config";
+import { auth } from "../../lib/auth";
 
 const registerPatient = catchAsync(async (req, res) => {
   const payload = req.body;
@@ -158,26 +161,50 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const googleLogin = catchAsync(async (req: Request, res: Response) => {
-  sendResponse(res, {
-    httpStatuscode: StatusCodes.OK,
-    success: true,
-    message: "Login successfully",
+  const redirectPath = req.query.redirect || "dashboard";
+  const encodedRedirectPath = encodeURIComponent(redirectPath as string);
+  const callbackURL = `${envVars.BETTER_AUTH_URL}/api/v1/auth/google/success?redirect=${encodedRedirectPath}`;
+
+  res.render("googleRedirect", {
+    callbackURL: callbackURL,
+    betterAuthUrl: envVars.BETTER_AUTH_URL,
   });
 });
+
 const googleLoginSuccess = catchAsync(async (req: Request, res: Response) => {
-  sendResponse(res, {
-    httpStatuscode: StatusCodes.OK,
-    success: true,
-    message: "Reset password successfully",
+  const redirectPath = (req.query.redirect as string) || "dashboard";
+  const sessionToken = req.cookies["better-auth.session_token"];
+  if (!sessionToken) {
+    return res.redirect(`${envVars.FRONTEND_URL}/login?error=oauth_faild`);
+  }
+  const session = await auth.api.getSession({
+    headers: {
+      Cookie: `better-auth.session_token${sessionToken}`,
+    },
   });
+
+  if (!session) {
+    return res.redirect(`${envVars.FRONTEND_URL}/login?error=no_session_found`);
+  }
+  if (session && !session.user) {
+    return res.redirect(`${envVars.FRONTEND_URL}/login?error=no_user_found`);
+  }
+  const result = await authService.googleLoginSuccess(session);
+  const { accessToken, refreshToken } = result;
+
+  tokenUtils.setAccessTokenCookie(res, accessToken);
+  tokenUtils.setRefreshTokenCookie(res, refreshToken);
+
+  const isValidRedirectPath =
+    redirectPath.startsWith("/") && !redirectPath.startsWith("//");
+  const finalRedirectPath = isValidRedirectPath ? redirectPath : "/dashboard";
+  res.redirect(`${envVars.FRONTEND_URL}${finalRedirectPath}`);
 });
 const googleLoginError = catchAsync(async (req: Request, res: Response) => {
-  sendResponse(res, {
-    httpStatuscode: StatusCodes.OK,
-    success: true,
-    message: "Reset password successfully",
-  });
+  const error = (req.query.error as string) || "oauth_faild";
+  res.redirect(`${envVars.FRONTEND_URL}/login?error=${error}`);
 });
+
 export const authController = {
   registerPatient,
   loginPatient,
