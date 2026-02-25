@@ -16,7 +16,13 @@ const getAllSpecialties = catchAsync(async (req: Request, res: Response) => {
 });
 
 const createSpecialty = catchAsync(async (req: Request, res: Response) => {
-  const specialties = await specialtiesService.createSpecialty(req.body);
+  console.log(req.file);
+  const payload = {
+    ...req.body,
+    icon: req.file?.path,
+  };
+  const specialties = await specialtiesService.createSpecialty(payload);
+
   sendResponse(res, {
     httpStatuscode: StatusCodes.OK,
     success: true,
