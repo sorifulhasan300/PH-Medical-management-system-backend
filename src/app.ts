@@ -3,12 +3,18 @@ import { apiRouter } from "./routers";
 import { globalErrorHandler } from "./middleware/global-error-handler";
 import { NotFoundMiddleware } from "./middleware/not-found";
 import cookieParser from "cookie-parser";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./app/lib/auth";
+import path from "path";
 const app: Application = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cookieParser());
 // Use API routes
+app.set("view engine", "ejs");
+app.set("views", path.resolve(process.cwd(), `src/app/templates`));
+app.use("/api/auth", toNodeHandler(auth));
 app.use("/api/v1", apiRouter);
 app.use(globalErrorHandler);
 app.use(NotFoundMiddleware);

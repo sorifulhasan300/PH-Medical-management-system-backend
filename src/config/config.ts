@@ -22,6 +22,10 @@ interface EnvConfig {
     SMTP_PORT: string;
     SMTP_FROM: string;
   };
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_CLIENT_ID: string;
+  REDIRECT_URL: string;
+  FRONTEND_URL: string;
 }
 const loadEnvVariables = (): EnvConfig => {
   const requiredEnvVars = [
@@ -41,6 +45,10 @@ const loadEnvVariables = (): EnvConfig => {
     "EMAIL_SENDER_SMTP_PASS",
     "EMAIL_SENDER_SMTP_PORT",
     "EMAIL_SENDER_SMTP_FROM",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_CLIENT_ID",
+    "REDIRECT_URL",
+    "FRONTEND_URL",
   ];
 
   requiredEnvVars.forEach((varName) => {
@@ -72,6 +80,10 @@ const loadEnvVariables = (): EnvConfig => {
       SMTP_PORT: process.env.EMAIL_SENDER_SMTP_PORT as string,
       SMTP_FROM: process.env.EMAIL_SENDER_SMTP_FROM as string,
     },
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET as string,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
+    REDIRECT_URL: process.env.REDIRECT_URL as string,
+    FRONTEND_URL: process.env.FRONTEND_URL as string,
   };
 };
 export const envVars = loadEnvVariables();

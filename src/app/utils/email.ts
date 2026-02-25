@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import nodemailer from "nodemailer";
 import { envVars } from "../../config/config";
 import AppError from "../../error-helper/app.error.helper";
 import { StatusCodes } from "http-status-codes";
 import path from "path";
 import ejs from "ejs";
-const transpporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: envVars.EMAIL_SENDER.SMTP_HOST,
   secure: true,
   auth: {
@@ -40,7 +41,7 @@ export const sendEmail = async ({
       `src/app/templates/${templateName}.ejs`,
     );
     const html = await ejs.renderFile(templatePath, templateDate);
-    const info = await transpporter.sendMail({
+    const info = await transporter.sendMail({
       from: envVars.EMAIL_SENDER.SMTP_FROM,
       to: to,
       subject: subject,
@@ -56,7 +57,7 @@ export const sendEmail = async ({
     console.log("Email Sending Error", error.message);
     throw new AppError(
       StatusCodes.INTERNAL_SERVER_ERROR,
-      "Faild to send email",
+      "Failed to send email",
     );
   }
 };

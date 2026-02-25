@@ -18,5 +18,11 @@ route.post(
   ),
   authController.logoutUser,
 );
-route.post("/verify-email", authController.verifyEmail);
+route.post("/forget-password", authController.forgetPassword);
+route.post("/reset-password", authController.resetPassword);
+
+route.get("/login/google", authController.googleLogin);
+route.get("/google/success", authController.googleLoginSuccess);
+route.get("/google/error", authController.googleLoginError);
+
 export const AuthRoute = route;

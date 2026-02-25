@@ -4,8 +4,11 @@ import { prisma } from "./prisma";
 import { UserRole, UserStatus } from "../../generated/prisma/enums";
 import { bearer, emailOTP } from "better-auth/plugins";
 import { sendEmail } from "../utils/email";
+import { envVars } from "../../config/config";
 
 export const auth = betterAuth({
+  baseURL: envVars.BETTER_AUTH_URL,
+  secret: envVars.BETTER_AUTH_SECRET,
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
@@ -17,6 +20,23 @@ export const auth = betterAuth({
     sendOnSignIn: true,
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
+  },
+  socialProviders: {
+    google: {
+      clientId: envVars.GOOGLE_CLIENT_ID,
+      clientSecret: envVars.GOOGLE_CLIENT_SECRET,
+      // callbackUrl: envVars.REDIRECT_URL,
+      mapProfileToUser: () => {
+        return {
+          role: UserRole.PATIENT,
+          status: UserStatus.ACTIVE,
+          needPasswordChange: false,
+          emailVerified: false,
+          isDeleted: false,
+          deletedAt: null,
+        };
+      },
+    },
   },
   user: {
     additionalFields: {
@@ -47,6 +67,7 @@ export const auth = betterAuth({
     bearer(),
     emailOTP({
       overrideDefaultEmailVerification: true,
+
       async sendVerificationOTP({ email, otp, type }) {
         if (type === "email-verification") {
           const user = await prisma.user.findUnique({
@@ -58,6 +79,23 @@ export const auth = betterAuth({
             sendEmail({
               to: email,
               subject: "Verify you email",
+              templateName: "otp",
+              templateDate: {
+                name: user.name,
+                otp,
+              },
+            });
+          }
+        } else if (type === "forget-password") {
+          const user = await prisma.user.findUnique({
+            where: {
+              email,
+            },
+          });
+          if (user) {
+            sendEmail({
+              to: email,
+              subject: "Reset password",
               templateName: "otp",
               templateDate: {
                 name: user.name,
@@ -77,6 +115,29 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 60 * 60 * 60 * 24,
+    },
+  },
+
+  // configuration for social login
+  advanced: {
+    useSecureCookies: false,
+    cookies: {
+      state: {
+        attributes: {
+          sameSite: "none",
+          secure: true,
+          httpOnly: true,
+          path: "/",
+        },
+      },
+    },
+    sessionToken: {
+      attributes: {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+        path: "/",
+      },
     },
   },
 });

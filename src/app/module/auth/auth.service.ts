@@ -248,6 +248,54 @@ const verifyEmail = async (email: string, otp: string) => {
     });
   }
 };
+const forgetPassword = async (email: string) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: {
+      email,
+      isDeleted: false,
+      status: "ACTIVE",
+    },
+  });
+  if (!isUserExist) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found or inactive!");
+  }
+  if (!isUserExist.emailVerified) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Email not verified!");
+  }
+  await auth.api.requestPasswordResetEmailOTP({
+    body: {
+      email,
+    },
+  });
+};
+const resetPassword = async (
+  email: string,
+  otp: string,
+  newPassword: string,
+) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: {
+      email,
+      isDeleted: false,
+      status: "ACTIVE",
+    },
+  });
+  if (!isUserExist) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found or inactive!");
+  }
+  if (!isUserExist.emailVerified) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Email not verified!");
+  }
+  await auth.api.resetPasswordEmailOTP({
+    body: {
+      email: email,
+      otp,
+      password: newPassword,
+    },
+  });
+};
+
+const googleLoginSuccess = () => {};
 export const authService = {
   registerPatient,
   loginPatient,
@@ -255,4 +303,7 @@ export const authService = {
   changePassword,
   logoutUser,
   verifyEmail,
+  forgetPassword,
+  resetPassword,
+  googleLoginSuccess,
 };

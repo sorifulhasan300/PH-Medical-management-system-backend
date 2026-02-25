@@ -13,5 +13,4 @@ router.use("/user", userRoute);
 router.use("/doctors", DoctorRoutes);
 router.use("/admin", AdminRoutes);
 router.use("/super-admin", SuperAdminRoutes);
-
 export const apiRouter = router;

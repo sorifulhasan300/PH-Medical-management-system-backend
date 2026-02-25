@@ -6,6 +6,7 @@ import { tokenUtils } from "../../utils/token";
 import AppError from "../../../error-helper/app.error.helper";
 import { StatusCodes } from "http-status-codes";
 import { CookieUtils } from "../../utils/cookie";
+import { prisma } from "../../lib/prisma";
 
 const registerPatient = catchAsync(async (req, res) => {
   const payload = req.body;
@@ -24,7 +25,6 @@ const registerPatient = catchAsync(async (req, res) => {
     },
   });
 });
-
 const loginPatient = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
   const result = await authService.loginPatient(payload);
@@ -74,13 +74,19 @@ const getNewToken = catchAsync(async (req: Request, res: Response) => {
 const changePassword = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
   const betterSessionToken = req.cookies["better-auth.session_token"];
-
   const result = await authService.changePassword(payload, betterSessionToken);
-
   tokenUtils.setAccessTokenCookie(res, result.accessToken);
   tokenUtils.setRefreshTokenCookie(res, result.refreshToken);
   tokenUtils.setBetterAuthSessionCookie(res, result.token as string);
-
+  const id = result.user.id;
+  if (result.user.needPasswordChange) {
+    await prisma.user.update({
+      where: { id },
+      data: {
+        needPasswordChange: false,
+      },
+    });
+  }
   sendResponse(res, {
     httpStatuscode: StatusCodes.OK,
     success: true,
@@ -132,6 +138,46 @@ const verifyEmail = catchAsync(async (req: Request, res: Response) => {
     message: "Email verify successfully",
   });
 });
+const forgetPassword = catchAsync(async (req: Request, res: Response) => {
+  const { email } = req.body;
+  await authService.forgetPassword(email);
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "forget password code send successfully. check your email!",
+  });
+});
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  const { email, otp, newPassword } = req.body;
+  await authService.resetPassword(email, otp, newPassword);
+
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "Reset password successfully",
+  });
+});
+const googleLogin = catchAsync(async (req: Request, res: Response) => {
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "Login successfully",
+  });
+});
+const googleLoginSuccess = catchAsync(async (req: Request, res: Response) => {
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "Reset password successfully",
+  });
+});
+const googleLoginError = catchAsync(async (req: Request, res: Response) => {
+  sendResponse(res, {
+    httpStatuscode: StatusCodes.OK,
+    success: true,
+    message: "Reset password successfully",
+  });
+});
 export const authController = {
   registerPatient,
   loginPatient,
@@ -139,4 +185,9 @@ export const authController = {
   changePassword,
   logoutUser,
   verifyEmail,
+  forgetPassword,
+  resetPassword,
+  googleLogin,
+  googleLoginSuccess,
+  googleLoginError,
 };
