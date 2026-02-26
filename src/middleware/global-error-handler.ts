@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import z from "zod";
+import z, { promise } from "zod";
 import { IErrorSource, TErrorResponse } from "../interface/error.interface";
 import { envVars } from "../config/config";
 import { handleZodError } from "../error-helper/error.helper";
 import AppError from "../error-helper/app.error.helper";
+import { deleteFileFromCloudinary } from "../config/cloudinary.config";
 
-export const globalErrorHandler = (
+export const globalErrorHandler = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   err: any,
   req: Request,
@@ -22,7 +23,13 @@ export const globalErrorHandler = (
     statusCode = StatusCodes.BAD_REQUEST;
     message = err.message;
   }
-
+  if (req.file) {
+    await deleteFileFromCloudinary(req.file.path);
+  }
+  if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+    const imageUrls = req.files.map((file) => file.path);
+    await Promise.all(imageUrls.map((url) => deleteFileFromCloudinary(url)));
+  }
   if (err instanceof z.ZodError) {
     statusCode = StatusCodes.BAD_REQUEST;
     message = "Zod validation Error";

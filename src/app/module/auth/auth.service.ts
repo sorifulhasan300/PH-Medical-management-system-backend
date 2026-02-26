@@ -10,18 +10,11 @@ import { jwtUtils } from "../../utils/jwt.utils";
 import { envVars } from "../../../config/config";
 import { JwtPayload } from "jsonwebtoken";
 import { refreshToken } from "better-auth/api";
-import { ChangePassword } from "./auth.interface";
-
-interface RegisterPatientPayload {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface LoginPatientPayload {
-  email: string;
-  password: string;
-}
+import {
+  ChangePassword,
+  LoginPatientPayload,
+  RegisterPatientPayload,
+} from "./auth.interface";
 
 const registerPatient = async (payload: RegisterPatientPayload) => {
   const { name, email, password } = payload;
