@@ -52,7 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Admin: 'Admin',
-  Appoitnment: 'Appoitnment',
+  Appointment: 'Appointment',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
@@ -105,7 +105,7 @@ export const AdminScalarFieldEnum = {
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
-export const AppoitnmentScalarFieldEnum = {
+export const AppointmentScalarFieldEnum = {
   id: 'id',
   patientId: 'patientId',
   doctorId: 'doctorId',
@@ -117,7 +117,7 @@ export const AppoitnmentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type AppoitnmentScalarFieldEnum = (typeof AppoitnmentScalarFieldEnum)[keyof typeof AppoitnmentScalarFieldEnum]
+export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -189,17 +189,17 @@ export const DoctorScalarFieldEnum = {
   email: 'email',
   profilePhoto: 'profilePhoto',
   contactNumber: 'contactNumber',
+  address: 'address',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   registrationNumber: 'registrationNumber',
   experience: 'experience',
   gender: 'gender',
-  address: 'address',
   appointmentFee: 'appointmentFee',
   qualification: 'qualification',
-  currentWorkplace: 'currentWorkplace',
+  currentWorkingPlace: 'currentWorkingPlace',
   designation: 'designation',
   averageRating: 'averageRating',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
@@ -279,13 +279,13 @@ export type PatientHealthDataScalarFieldEnum = (typeof PatientHealthDataScalarFi
 
 export const PaymentScalarFieldEnum = {
   id: 'id',
-  amunt: 'amunt',
-  transectionId: 'transectionId',
+  amount: 'amount',
+  transactionId: 'transactionId',
   status: 'status',
   paymentGatewayData: 'paymentGatewayData',
   createAt: 'createAt',
   updatedAt: 'updatedAt',
-  appoitnmentId: 'appoitnmentId'
+  appointmentId: 'appointmentId'
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
@@ -293,11 +293,13 @@ export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeo
 
 export const PrescriptionScalarFieldEnum = {
   id: 'id',
-  instruction: 'instruction',
-  followupDate: 'followupDate',
+  followUpDate: 'followUpDate',
+  instructions: 'instructions',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  appointmentId: 'appointmentId'
+  appointmentId: 'appointmentId',
+  patientId: 'patientId',
+  doctorId: 'doctorId'
 } as const
 
 export type PrescriptionScalarFieldEnum = (typeof PrescriptionScalarFieldEnum)[keyof typeof PrescriptionScalarFieldEnum]

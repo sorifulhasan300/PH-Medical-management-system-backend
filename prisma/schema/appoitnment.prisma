@@ -1,4 +1,4 @@
-model Appoitnment {
+model Appointment {
   id String @id @default(uuid(7))
   patientId          String   @unique
   doctorId           String   

@@ -192,7 +192,7 @@ export type DoctorSchedulesWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"DoctorSchedules"> | Date | string
   doctor?: Prisma.XOR<Prisma.DoctorScalarRelationFilter, Prisma.DoctorWhereInput>
   schedule?: Prisma.XOR<Prisma.ScheduleScalarRelationFilter, Prisma.ScheduleWhereInput>
-  appointment?: Prisma.XOR<Prisma.AppoitnmentNullableScalarRelationFilter, Prisma.AppoitnmentWhereInput> | null
+  appointment?: Prisma.XOR<Prisma.AppointmentNullableScalarRelationFilter, Prisma.AppointmentWhereInput> | null
 }
 
 export type DoctorSchedulesOrderByWithRelationInput = {
@@ -204,7 +204,7 @@ export type DoctorSchedulesOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   doctor?: Prisma.DoctorOrderByWithRelationInput
   schedule?: Prisma.ScheduleOrderByWithRelationInput
-  appointment?: Prisma.AppoitnmentOrderByWithRelationInput
+  appointment?: Prisma.AppointmentOrderByWithRelationInput
 }
 
 export type DoctorSchedulesWhereUniqueInput = Prisma.AtLeast<{
@@ -220,7 +220,7 @@ export type DoctorSchedulesWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"DoctorSchedules"> | Date | string
   doctor?: Prisma.XOR<Prisma.DoctorScalarRelationFilter, Prisma.DoctorWhereInput>
   schedule?: Prisma.XOR<Prisma.ScheduleScalarRelationFilter, Prisma.ScheduleWhereInput>
-  appointment?: Prisma.XOR<Prisma.AppoitnmentNullableScalarRelationFilter, Prisma.AppoitnmentWhereInput> | null
+  appointment?: Prisma.XOR<Prisma.AppointmentNullableScalarRelationFilter, Prisma.AppointmentWhereInput> | null
 }, "id" | "doctorId_scheduleId">
 
 export type DoctorSchedulesOrderByWithAggregationInput = {
@@ -254,7 +254,7 @@ export type DoctorSchedulesCreateInput = {
   updatedAt?: Date | string
   doctor: Prisma.DoctorCreateNestedOneWithoutDoctorSchedulesInput
   schedule: Prisma.ScheduleCreateNestedOneWithoutDoctorSchedulesInput
-  appointment?: Prisma.AppoitnmentCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesUncheckedCreateInput = {
@@ -264,7 +264,7 @@ export type DoctorSchedulesUncheckedCreateInput = {
   isBooked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointment?: Prisma.AppoitnmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesUpdateInput = {
@@ -274,7 +274,7 @@ export type DoctorSchedulesUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctor?: Prisma.DoctorUpdateOneRequiredWithoutDoctorSchedulesNestedInput
   schedule?: Prisma.ScheduleUpdateOneRequiredWithoutDoctorSchedulesNestedInput
-  appointment?: Prisma.AppoitnmentUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesUncheckedUpdateInput = {
@@ -284,7 +284,7 @@ export type DoctorSchedulesUncheckedUpdateInput = {
   isBooked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointment?: Prisma.AppoitnmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesCreateManyInput = {
@@ -515,7 +515,7 @@ export type DoctorSchedulesCreateWithoutDoctorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   schedule: Prisma.ScheduleCreateNestedOneWithoutDoctorSchedulesInput
-  appointment?: Prisma.AppoitnmentCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesUncheckedCreateWithoutDoctorInput = {
@@ -524,7 +524,7 @@ export type DoctorSchedulesUncheckedCreateWithoutDoctorInput = {
   isBooked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointment?: Prisma.AppoitnmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesCreateOrConnectWithoutDoctorInput = {
@@ -571,7 +571,7 @@ export type DoctorSchedulesCreateWithoutScheduleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   doctor: Prisma.DoctorCreateNestedOneWithoutDoctorSchedulesInput
-  appointment?: Prisma.AppoitnmentCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesUncheckedCreateWithoutScheduleInput = {
@@ -580,7 +580,7 @@ export type DoctorSchedulesUncheckedCreateWithoutScheduleInput = {
   isBooked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointment?: Prisma.AppoitnmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
+  appointment?: Prisma.AppointmentUncheckedCreateNestedOneWithoutDoctorScheduleInput
 }
 
 export type DoctorSchedulesCreateOrConnectWithoutScheduleInput = {
@@ -623,7 +623,7 @@ export type DoctorSchedulesUpdateWithoutDoctorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schedule?: Prisma.ScheduleUpdateOneRequiredWithoutDoctorSchedulesNestedInput
-  appointment?: Prisma.AppoitnmentUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesUncheckedUpdateWithoutDoctorInput = {
@@ -632,7 +632,7 @@ export type DoctorSchedulesUncheckedUpdateWithoutDoctorInput = {
   isBooked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointment?: Prisma.AppoitnmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesUncheckedUpdateManyWithoutDoctorInput = {
@@ -657,7 +657,7 @@ export type DoctorSchedulesUpdateWithoutScheduleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   doctor?: Prisma.DoctorUpdateOneRequiredWithoutDoctorSchedulesNestedInput
-  appointment?: Prisma.AppoitnmentUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesUncheckedUpdateWithoutScheduleInput = {
@@ -666,7 +666,7 @@ export type DoctorSchedulesUncheckedUpdateWithoutScheduleInput = {
   isBooked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointment?: Prisma.AppoitnmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
+  appointment?: Prisma.AppointmentUncheckedUpdateOneWithoutDoctorScheduleNestedInput
 }
 
 export type DoctorSchedulesUncheckedUpdateManyWithoutScheduleInput = {
@@ -742,7 +742,7 @@ export type $DoctorSchedulesPayload<ExtArgs extends runtime.Types.Extensions.Int
   objects: {
     doctor: Prisma.$DoctorPayload<ExtArgs>
     schedule: Prisma.$SchedulePayload<ExtArgs>
-    appointment: Prisma.$AppoitnmentPayload<ExtArgs> | null
+    appointment: Prisma.$AppointmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1147,7 +1147,7 @@ export interface Prisma__DoctorSchedulesClient<T, Null = never, ExtArgs extends 
   readonly [Symbol.toStringTag]: "PrismaPromise"
   doctor<T extends Prisma.DoctorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DoctorDefaultArgs<ExtArgs>>): Prisma.Prisma__DoctorClient<runtime.Types.Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   schedule<T extends Prisma.ScheduleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ScheduleDefaultArgs<ExtArgs>>): Prisma.Prisma__ScheduleClient<runtime.Types.Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  appointment<T extends Prisma.DoctorSchedules$appointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DoctorSchedules$appointmentArgs<ExtArgs>>): Prisma.Prisma__AppoitnmentClient<runtime.Types.Result.GetResult<Prisma.$AppoitnmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  appointment<T extends Prisma.DoctorSchedules$appointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DoctorSchedules$appointmentArgs<ExtArgs>>): Prisma.Prisma__AppointmentClient<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1583,18 +1583,18 @@ export type DoctorSchedulesDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
  */
 export type DoctorSchedules$appointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Appoitnment
+   * Select specific fields to fetch from the Appointment
    */
-  select?: Prisma.AppoitnmentSelect<ExtArgs> | null
+  select?: Prisma.AppointmentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Appoitnment
+   * Omit specific fields from the Appointment
    */
-  omit?: Prisma.AppoitnmentOmit<ExtArgs> | null
+  omit?: Prisma.AppointmentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.AppoitnmentInclude<ExtArgs> | null
-  where?: Prisma.AppoitnmentWhereInput
+  include?: Prisma.AppointmentInclude<ExtArgs> | null
+  where?: Prisma.AppointmentWhereInput
 }
 
 /**

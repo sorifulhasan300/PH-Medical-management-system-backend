@@ -207,7 +207,7 @@ export type MedicalReportWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"MedicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MedicalReport"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
-  appointment?: Prisma.XOR<Prisma.AppoitnmentScalarRelationFilter, Prisma.AppoitnmentWhereInput>
+  appointment?: Prisma.XOR<Prisma.AppointmentScalarRelationFilter, Prisma.AppointmentWhereInput>
 }
 
 export type MedicalReportOrderByWithRelationInput = {
@@ -220,7 +220,7 @@ export type MedicalReportOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   patient?: Prisma.PatientOrderByWithRelationInput
-  appointment?: Prisma.AppoitnmentOrderByWithRelationInput
+  appointment?: Prisma.AppointmentOrderByWithRelationInput
 }
 
 export type MedicalReportWhereUniqueInput = Prisma.AtLeast<{
@@ -236,7 +236,7 @@ export type MedicalReportWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"MedicalReport"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MedicalReport"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
-  appointment?: Prisma.XOR<Prisma.AppoitnmentScalarRelationFilter, Prisma.AppoitnmentWhereInput>
+  appointment?: Prisma.XOR<Prisma.AppointmentScalarRelationFilter, Prisma.AppointmentWhereInput>
 }, "id" | "appointmentId">
 
 export type MedicalReportOrderByWithAggregationInput = {
@@ -275,7 +275,7 @@ export type MedicalReportCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   patient: Prisma.PatientCreateNestedOneWithoutMedicalReportsInput
-  appointment: Prisma.AppoitnmentCreateNestedOneWithoutMedicalReportInput
+  appointment: Prisma.AppointmentCreateNestedOneWithoutMedicalReportInput
 }
 
 export type MedicalReportUncheckedCreateInput = {
@@ -297,7 +297,7 @@ export type MedicalReportUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   patient?: Prisma.PatientUpdateOneRequiredWithoutMedicalReportsNestedInput
-  appointment?: Prisma.AppoitnmentUpdateOneRequiredWithoutMedicalReportNestedInput
+  appointment?: Prisma.AppointmentUpdateOneRequiredWithoutMedicalReportNestedInput
 }
 
 export type MedicalReportUncheckedUpdateInput = {
@@ -527,7 +527,7 @@ export type MedicalReportCreateWithoutPatientInput = {
   followUpDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointment: Prisma.AppoitnmentCreateNestedOneWithoutMedicalReportInput
+  appointment: Prisma.AppointmentCreateNestedOneWithoutMedicalReportInput
 }
 
 export type MedicalReportUncheckedCreateWithoutPatientInput = {
@@ -597,7 +597,7 @@ export type MedicalReportUpdateWithoutPatientInput = {
   followUpDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointment?: Prisma.AppoitnmentUpdateOneRequiredWithoutMedicalReportNestedInput
+  appointment?: Prisma.AppointmentUpdateOneRequiredWithoutMedicalReportNestedInput
 }
 
 export type MedicalReportUncheckedUpdateWithoutPatientInput = {
@@ -632,7 +632,7 @@ export type MedicalReportSelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["medicalReport"]>
 
 export type MedicalReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -645,7 +645,7 @@ export type MedicalReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["medicalReport"]>
 
 export type MedicalReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -658,7 +658,7 @@ export type MedicalReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   createdAt?: boolean
   updatedAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["medicalReport"]>
 
 export type MedicalReportSelectScalar = {
@@ -675,22 +675,22 @@ export type MedicalReportSelectScalar = {
 export type MedicalReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "appointmentId" | "diagnosis" | "treatment" | "followUpDate" | "createdAt" | "updatedAt", ExtArgs["result"]["medicalReport"]>
 export type MedicalReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }
 export type MedicalReportIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }
 export type MedicalReportIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
-  appointment?: boolean | Prisma.AppoitnmentDefaultArgs<ExtArgs>
+  appointment?: boolean | Prisma.AppointmentDefaultArgs<ExtArgs>
 }
 
 export type $MedicalReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MedicalReport"
   objects: {
     patient: Prisma.$PatientPayload<ExtArgs>
-    appointment: Prisma.$AppoitnmentPayload<ExtArgs>
+    appointment: Prisma.$AppointmentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1096,7 +1096,7 @@ readonly fields: MedicalReportFieldRefs;
 export interface Prisma__MedicalReportClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   patient<T extends Prisma.PatientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PatientDefaultArgs<ExtArgs>>): Prisma.Prisma__PatientClient<runtime.Types.Result.GetResult<Prisma.$PatientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  appointment<T extends Prisma.AppoitnmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppoitnmentDefaultArgs<ExtArgs>>): Prisma.Prisma__AppoitnmentClient<runtime.Types.Result.GetResult<Prisma.$AppoitnmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  appointment<T extends Prisma.AppointmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AppointmentDefaultArgs<ExtArgs>>): Prisma.Prisma__AppointmentClient<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

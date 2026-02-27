@@ -674,10 +674,6 @@ export type PatientHealthDataUncheckedUpdateOneWithoutPatientNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PatientHealthDataUpdateToOneWithWhereWithoutPatientInput, Prisma.PatientHealthDataUpdateWithoutPatientInput>, Prisma.PatientHealthDataUncheckedUpdateWithoutPatientInput>
 }
 
-export type EnumGenderFieldUpdateOperationsInput = {
-  set?: $Enums.Gender
-}
-
 export type EnumBloodGroupFieldUpdateOperationsInput = {
   set?: $Enums.BloodGroup
 }

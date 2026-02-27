@@ -41,7 +41,7 @@ export const doctorSchema = z.object({
       .string("Qualification is required")
       .min(5, "Qualification must be at least 5 characters long")
       .optional(),
-    currentWorkplace: z
+    currentWorkingPlace: z
       .string("Current workplace is required")
       .min(5, "Current workplace must be at least 5 characters long")
       .optional(),
@@ -87,7 +87,7 @@ export const SuperAdminSchema = z.object({
   superAdmin: z.object({
     name: z.string("Name is required"),
     email: z.email("Email is required"),
-
+    currentWorkingPlace: z.string("Working Place is required"),
     profilePhoto: z.url("Invalid photo URL").optional(),
 
     contactNumber: z.string("Contact number is required"),

@@ -1,13 +1,13 @@
 model Payment{
       id String @id @default(uuid(7))
-      amunt Float @default(0)
-      transectionId String
+      amount Float @default(0)
+      transactionId String
       status PaymentStatus @default(UNPAID)
       paymentGatewayData Json
       createAt DateTime
       updatedAt DateTime
-      appoitnmentId String @unique 
-      appoitnment Appoitnment @relation(fields: [appoitnmentId], references: [id])
+      appointmentId String @unique 
+      appointment Appointment @relation(fields: [appointmentId], references: [id])
 
   @@map("payment_data")
 
