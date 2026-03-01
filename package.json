@@ -10,6 +10,7 @@
     "lint": "eslint ./src/**/*",
     "migrate": "npx prisma migrate dev --name init",
     "generate": "npx prisma generate",
+    "stripe:webhook": "stripe listen --forward-to localhost:5000/webhook",
     "studio": "npx prisma studio"
   },
   "keywords": [],
@@ -54,6 +55,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^8.0.1",
     "pg": "^8.18.0",
+    "stripe": "^20.4.0",
     "zod": "^4.3.6"
   }
 }

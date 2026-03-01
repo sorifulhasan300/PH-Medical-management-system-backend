@@ -19,6 +19,15 @@ const corsOptions = {
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (req: Request, res: Response) => {
+    console.log("webhook received", req.body);
+    res.status(200).json({ received: true });
+  },
+);
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors(corsOptions));
