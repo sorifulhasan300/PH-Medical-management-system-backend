@@ -7,7 +7,6 @@ import AppError from "../../../error-helper/app.error.helper";
 import { StatusCodes } from "http-status-codes";
 import { CookieUtils } from "../../utils/cookie";
 import { prisma } from "../../lib/prisma";
-import { request } from "http";
 import { envVars } from "../../../config/config";
 import { auth } from "../../lib/auth";
 

@@ -1,4 +1,3 @@
-import { uuidv7 } from "zod";
 import { RequestUser } from "../../../interface/requestUser.interface";
 import { prisma } from "../../lib/prisma";
 import { IBookAppointmentPayload } from "./appointment.interface";
@@ -10,7 +9,8 @@ import {
   UserRole,
 } from "../../../generated/prisma/enums";
 import { envVars } from "../../../config/config";
-
+import { stripe } from "../../../config/stripe.config";
+import { v4 as uuidv4 } from "uuid";
 // Pay Now Book Appointment
 const bookAppointment = async (
   payload: IBookAppointmentPayload,
@@ -44,7 +44,8 @@ const bookAppointment = async (
     },
   });
 
-  const videoCallingId = String(uuidv7());
+  const videoCallingId = uuidv4();
+  console.log(videoCallingId);
 
   const result = await prisma.$transaction(async (tx) => {
     const appointmentData = await tx.appointment.create({
@@ -70,7 +71,7 @@ const bookAppointment = async (
 
     //TODO : Payment Integration will be here
 
-    const transactionId = String(uuidv7());
+    const transactionId = String(uuidv4());
 
     const paymentData = await tx.payment.create({
       data: {
@@ -299,7 +300,7 @@ const bookAppointmentWithPayLater = async (
     },
   });
 
-  const videoCallingId = String(uuidv7());
+  const videoCallingId = String(uuidv4());
 
   const result = await prisma.$transaction(async (tx) => {
     const appointmentData = await tx.appointment.create({
@@ -323,7 +324,7 @@ const bookAppointmentWithPayLater = async (
       },
     });
 
-    const transactionId = String(uuidv7());
+    const transactionId = String(uuidv4());
 
     const paymentData = await tx.payment.create({
       data: {

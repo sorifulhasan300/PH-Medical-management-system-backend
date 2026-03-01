@@ -20,6 +20,7 @@ route.post(
 );
 route.post("/forget-password", authController.forgetPassword);
 route.post("/reset-password", authController.resetPassword);
+route.post("/verify-email", authController.verifyEmail);
 
 route.get("/login/google", authController.googleLogin);
 route.get("/google/success", authController.googleLoginSuccess);
